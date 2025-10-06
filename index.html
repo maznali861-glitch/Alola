@@ -1,914 +1,195 @@
-<!doctype html>
-<html lang="ar">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>دليل الأطباء</title>
-  <style>
-    body {
-      font-family: "Tajawal", sans-serif;
-      direction: rtl;
-      margin: 0;
-      padding: 0;
-      color: #fff;
-      background: url('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1350&q=80') no-repeat center c<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USDT Miner - منصة تعدين الدولار</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #fdbb2d;
-        }
-        
-        .logo {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #fdbb2d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .logo span {
-            color: #00ff88;
-        }
-        
-        .subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-        }
-        
-        .user-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .balance {
-            font-size: 24px;
-            font-weight: bold;
-            color: #00ff88;
-        }
-        
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: #fdbb2d;
-            margin: 10px 0;
-        }
-        
-        .mining-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-        
-        .mining-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #fdbb2d;
-        }
-        
-        .mining-btn {
-            background: linear-gradient(135deg, #00ff88, #00cc66);
-            border: none;
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            font-size: 22px;
-            font-weight: bold;
-            color: #000;
-            cursor: pointer;
-            margin: 20px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
-            transition: all 0.3s;
-        }
-        
-        .mining-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.6);
-        }
-        
-        .mining-btn:disabled {
-            background: linear-gradient(135deg, #666, #999);
-            cursor: not-allowed;
-            transform: scale(1);
-            box-shadow: none;
-        }
-        
-        .clicks-left {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        
-        .subscription-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .subscription-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #fdbb2d;
-            text-align: center;
-        }
-        
-        .subscription-plans {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .plan {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            border: 2px solid #fdbb2d;
-            transition: all 0.3s;
-        }
-        
-        .plan:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        
-        .plan-title {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: #fdbb2d;
-        }
-        
-        .plan-price {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 15px 0;
-            color: #00ff88;
-        }
-        
-        .plan-features {
-            list-style: none;
-            margin: 15px 0;
-        }
-        
-        .plan-features li {
-            margin: 8px 0;
-            opacity: 0.9;
-        }
-        
-        .subscribe-btn {
-            background: linear-gradient(135deg, #fdbb2d, #ff8c00);
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #000;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-        
-        .subscribe-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .trial-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            border-left: 5px solid #00ff88;
-        }
-        
-        .withdraw-section {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .withdraw-title {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: #fdbb2d;
-            text-align: center;
-        }
-        
-        .withdraw-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        
-        label {
-            font-weight: bold;
-        }
-        
-        input, select {
-            padding: 12px;
-            border-radius: 5px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 16px;
-        }
-        
-        .withdraw-btn {
-            background: linear-gradient(135deg, #00ff88, #00cc66);
-            border: none;
-            border-radius: 5px;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #000;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-        
-        .withdraw-btn:hover {
-            transform: scale(1.02);
-        }
-        
-        .withdraw-btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: scale(1);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            opacity: 0.8;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #00ff88;
-            color: #000;
-            padding: 15px 25px;
-            border-radius: 10px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            transform: translateX(150%);
-            transition: transform 0.5s;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        @media (max-width: 768px) {
-            .stats, .subscription-plans {
-                grid-template-columns: 1fr;
-            }
-            
-            .mining-btn {
-                width: 120px;
-                height: 120px;
-                font-size: 18px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <span>USDT</span> Miner
-            </div>
-            <div class="subtitle">منصة تعدين الدولار الإلكتروني - اربح يومياً</div>
-        </header>
-        
-        <div class="user-info">
-            <div>
-                <div>مرحباً, <span id="username">مستخدم جديد</span></div>
-                <div>حالة الحساب: <span id="account-status">تجريبي (2 يوم متبقي)</span></div>
-            </div>
-            <div class="balance" id="balance">0.00 USDT</div>
-        </div>
-        
-        <div class="trial-info" id="trial-info">
-            <h3>الفترة التجريبية فعالة</h3>
-            <p>يمكنك الحصول على 3 دولارات يومياً لمدة يومين كفترة تجريبية. بعد انتهاء الفترة، يلزم الاشتراك للاستمرار.</p>
-        </div>
-        
-        <div class="stats">
-            <div class="stat-card">
-                <div>إجمالي الأرباح</div>
-                <div class="stat-value" id="total-earned">0.00 USDT</div>
-            </div>
-            <div class="stat-card">
-                <div>النقرات اليوم</div>
-                <div class="stat-value" id="today-clicks">0/3</div>
-            </div>
-            <div class="stat-card">
-                <div>الأيام المتبقية</div>
-                <div class="stat-value" id="days-left">2</div>
-            </div>
-        </div>
-        
-        <div class="mining-section">
-            <h2 class="mining-title">التعدين اليومي</h2>
-            <p>انقر على الزر أدناه لبدء التعدين والحصول على 1 USDT لكل نقرة</p>
-            <button class="mining-btn" id="mining-btn">
-                <span>انقر للتعدين</span>
-                <span>+1 USDT</span>
-            </button>
-            <div class="clicks-left" id="clicks-left">3 نقرات متبقية اليوم</div>
-        </div>
-        
-        <div class="subscription-section" id="subscription-section">
-            <h2 class="subscription-title">باقات الاشتراك</h2>
-            <div class="subscription-plans">
-                <div class="plan">
-                    <h3 class="plan-title">الباقة الأساسية</h3>
-                    <div class="plan-price">10 USDT / شهر</div>
-                    <ul class="plan-features">
-                        <li>5 نقرات يومياً</li>
-                        <li>5 USDT يومياً</li>
-                        <li>دعم فني أساسي</li>
-                        <li>سحب يومي حتى 50 USDT</li>
-                    </ul>
-                    <button class="subscribe-btn" onclick="subscribe('basic')">اشترك الآن</button>
-                </div>
-                <div class="plan">
-                    <h3 class="plan-title">الباقة المميزة</h3>
-                    <div class="plan-price">25 USDT / شهر</div>
-                    <ul class="plan-features">
-                        <li>10 نقرات يومياً</li>
-                        <li>10 USDT يومياً</li>
-                        <li>دعم فني مميز</li>
-                        <li>سحب يومي حتى 200 USDT</li>
-                        <li>مكافأة ترحيب 5 USDT</li>
-                    </ul>
-                    <button class="subscribe-btn" onclick="subscribe('premium')">اشترك الآن</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="withdraw-section">
-            <h2 class="withdraw-title">سحب الأرباح</h2>
-            <div class="withdraw-form">
-                <div class="form-group">
-                    <label for="withdraw-amount">المبلغ المطلوب سحبه (USDT)</label>
-                    <input type="number" id="withdraw-amount" min="10" placeholder="أدخل المبلغ">
-                </div>
-                <div class="form-group">
-                    <label for="wallet-type">نوع المحفظة</label>
-                    <select id="wallet-type">
-                        <option value="trc20">TRC20 (تيثير)</option>
-                        <option value="erc20">ERC20 (إيثيريوم)</option>
-                        <option value="bep20">BEP20 (بينانس)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="wallet-address">عنوان المحفظة</label>
-                    <input type="text" id="wallet-address" placeholder="أدخل عنوان محفظتك">
-                </div>
-                <button class="withdraw-btn" id="withdraw-btn" onclick="withdraw()">طلب السحب</button>
-            </div>
-        </div>
-        
-        <footer>
-            <p>USDT Miner &copy; 2023 - جميع الحقوق محفوظة</p>
-            <p>للدعم الفني: support@usdtminer.com</p>
-        </footer>
-    </div>
-    
-    <div class="notification" id="notification"></div>
-
-    <script>
-        // بيانات المستخدم
-        let userData = {
-            username: "مستخدم جديد",
-            balance: 0,
-            totalEarned: 0,
-            todayClicks: 0,
-            maxDailyClicks: 3,
-            trialDaysLeft: 2,
-            isSubscribed: false,
-            subscriptionType: null,
-            lastClickDate: null
-        };
-        
-        // تحميل البيانات من localStorage
-        function loadUserData() {
-            const savedData = localStorage.getItem('usdtMinerData');
-            if (savedData) {
-                userData = JSON.parse(savedData);
-            }
-            
-            // التحقق إذا كان اليوم قد تغير
-            const today = new Date().toDateString();
-            if (userData.lastClickDate !== today) {
-                userData.todayClicks = 0;
-                userData.lastClickDate = today;
-                
-                // إذا انتهت الفترة التجريبية
-                if (userData.trialDaysLeft <= 0 && !userData.isSubscribed) {
-                    userData.maxDailyClicks = 0;
-                }
-                
-                saveUserData();
-            }
-            
-            updateUI();
-        }
-        
-        // حفظ البيانات في localStorage
-        function saveUserData() {
-            localStorage.setItem('usdtMinerData', JSON.stringify(userData));
-        }
-        
-        // تحديث واجهة المستخدم
-        function updateUI() {
-            document.getElementById('username').textContent = userData.username;
-            document.getElementById('balance').textContent = userData.balance.toFixed(2) + ' USDT';
-            document.getElementById('total-earned').textContent = userData.totalEarned.toFixed(2) + ' USDT';
-            document.getElementById('today-clicks').textContent = userData.todayClicks + '/' + userData.maxDailyClicks;
-            document.getElementById('days-left').textContent = userData.trialDaysLeft;
-            document.getElementById('clicks-left').textContent = (userData.maxDailyClicks - userData.todayClicks) + ' نقرات متبقية اليوم';
-            
-            const miningBtn = document.getElementById('mining-btn');
-            if (userData.todayClicks >= userData.maxDailyClicks) {
-                miningBtn.disabled = true;
-                miningBtn.innerHTML = '<span>تم الانتهاء</span><span>لليوم</span>';
-            } else {
-                miningBtn.disabled = false;
-                miningBtn.innerHTML = '<span>انقر للتعدين</span><span>+1 USDT</span>';
-            }
-            
-            // تحديث حالة الحساب
-            const accountStatus = document.getElementById('account-status');
-            if (userData.isSubscribed) {
-                accountStatus.textContent = `مشترك (${userData.subscriptionType})`;
-                document.getElementById('trial-info').style.display = 'none';
-            } else if (userData.trialDaysLeft > 0) {
-                accountStatus.textContent = `تجريبي (${userData.trialDaysLeft} يوم متبقي)`;
-                document.getElementById('trial-info').style.display = 'block';
-            } else {
-                accountStatus.textContent = 'غير مشترك';
-                document.getElementById('trial-info').style.display = 'none';
-                miningBtn.disabled = true;
-                miningBtn.innerHTML = '<span>يلزم الاشتراك</span><span>للاستمرار</span>';
-            }
-            
-            // تحديث زر السحب
-            const withdrawBtn = document.getElementById('withdraw-btn');
-            if (userData.balance >= 10) {
-                withdrawBtn.disabled = false;
-            } else {
-                withdrawBtn.disabled = true;
-            }
-        }
-        
-        // وظيفة التعدين (النقر)
-        function mine() {
-            if (userData.todayClicks >= userData.maxDailyClicks) {
-                showNotification('لقد استهلكت جميع النقرات لليوم!', 'error');
-                return;
-            }
-            
-            if (userData.trialDaysLeft <= 0 && !userData.isSubscribed) {
-                showNotification('انتهت الفترة التجريبية، يلزم الاشتراك للاستمرار', 'error');
-                return;
-            }
-            
-            // زيادة الرصيد والنقرات
-            userData.balance += 1;
-            userData.totalEarned += 1;
-            userData.todayClicks++;
-            
-            // إذا كانت الفترة التجريبية ولا يزال هناك أيام
-            if (!userData.isSubscribed && userData.trialDaysLeft > 0) {
-                // في اليوم الأول، نمنح 3 نقرات، في اليوم الثاني كذلك
-                // لا نقوم بتقليل الأيام المتبقية هنا
-            }
-            
-            saveUserData();
-            updateUI();
-            
-            // تأثير النقر
-            const miningBtn = document.getElementById('mining-btn');
-            miningBtn.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                miningBtn.style.transform = 'scale(1)';
-            }, 150);
-            
-            showNotification('مبروك! لقد ربحت 1 USDT', 'success');
-            
-            // إذا كانت هذه آخر نقرة لليوم
-            if (userData.todayClicks >= userData.maxDailyClicks) {
-                setTimeout(() => {
-                    // في نهاية اليوم، نقلل من الأيام المتبقية في الفترة التجريبية
-                    if (!userData.isSubscribed && userData.trialDaysLeft > 0) {
-                        userData.trialDaysLeft--;
-                        saveUserData();
-                        updateUI();
-                        
-                        if (userData.trialDaysLeft <= 0) {
-                            showNotification('انتهت الفترة التجريبية، يلزم الاشتراك للاستمرار', 'warning');
-                        } else {
-                            showNotification(`باقي لك ${userData.trialDaysLeft} يوم في الفترة التجريبية`, 'info');
-                        }
-                    }
-                }, 1000);
-            }
-        }
-        
-        // وظيفة الاشتراك
-        function subscribe(plan) {
-            if (userData.isSubscribed) {
-                showNotification('أنت مشترك بالفعل!', 'info');
-                return;
-            }
-            
-            let planName, planPrice, dailyClicks;
-            
-            if (plan === 'basic') {
-                planName = 'الأساسية';
-                planPrice = 10;
-                dailyClicks = 5;
-            } else if (plan === 'premium') {
-                planName = 'المميزة';
-                planPrice = 25;
-                dailyClicks = 10;
-            }
-            
-            if (userData.balance < planPrice) {
-                showNotification(`رصيدك غير كافٍ للاشتراك في الباقة ${planName}`, 'error');
-                return;
-            }
-            
-            if (confirm(`هل تريد الاشتراك في الباقة ${planName} بقيمة ${planPrice} USDT؟`)) {
-                userData.balance -= planPrice;
-                userData.isSubscribed = true;
-                userData.subscriptionType = planName;
-                userData.maxDailyClicks = dailyClicks;
-                userData.trialDaysLeft = 0; // إنهاء الفترة التجريبية
-                
-                if (plan === 'premium') {
-                    userData.balance += 5; // مكافأة ترحيب للباقة المميزة
-                    showNotification(`تم الاشتراك بنجاح! تم إضافة 5 USDT كمكافأة ترحيب`, 'success');
-                } else {
-                    showNotification('تم الاشتراك بنجاح!', 'success');
-                }
-                
-                saveUserData();
-                updateUI();
-            }
-        }
-        
-        // وظيفة السحب
-        function withdraw() {
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-            const walletType = document.getElementById('wallet-type').value;
-            const walletAddress = document.getElementById('wallet-address').value.trim();
-            
-            if (!amount || amount < 10) {
-                showNotification('الحد الأدنى للسحب هو 10 USDT', 'error');
-                return;
-            }
-            
-            if (amount > userData.balance) {
-                showNotification('رصيدك غير كافٍ لهذا المبلغ', 'error');
-                return;
-            }
-            
-            if (!walletAddress) {
-                showNotification('يرجى إدخال عنوان المحفظة', 'error');
-                return;
-            }
-            
-            if (confirm(`هل تريد سحب ${amount} USDT إلى محفظتك؟`)) {
-                // في التطبيق الحقيقي، هنا يتم الاتصال بخادم لمعالجة السحب
-                userData.balance -= amount;
-                saveUserData();
-                updateUI();
-                
-                showNotification(`تم إرسال طلب سحب ${amount} USDT بنجاح، سيتم المعالجة خلال 24 ساعة`, 'success');
-                
-                // مسح الحقول
-                document.getElementById('withdraw-amount').value = '';
-                document.getElementById('wallet-address').value = '';
-            }
-        }
-        
-        // وظيفة عرض الإشعارات
-        function showNotification(message, type) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            
-            // تلوين الإشعار حسب النوع
-            if (type === 'success') {
-                notification.style.background = '#00ff88';
-                notification.style.color = '#000';
-            } else if (type === 'error') {
-                notification.style.background = '#ff4444';
-                notification.style.color = '#fff';
-            } else if (type === 'warning') {
-                notification.style.background = '#ffbb33';
-                notification.style.color = '#000';
-            } else {
-                notification.style.background = '#33b5e5';
-                notification.style.color = '#fff';
-            }
-            
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // تهيئة التطبيق عند التحميل
-        document.addEventListener('DOMContentLoaded', function() {
-            loadUserData();
-            
-            // إضافة مستخدم جديد إذا لم يكن موجوداً
-            if (!localStorage.getItem('usdtMinerData')) {
-                // تعيين تاريخ اليوم كتاريخ أول نقرة
-                userData.lastClickDate = new Date().toDateString();
-                saveUserData();
-            }
-            
-            // ربط زر التعدين
-            document.getElementById('mining-btn').addEventListener('click', mine);
-            
-            // تعيين اسم مستخدم عشوائي للمستخدم الجديد
-            if (userData.username === "مستخدم جديد") {
-                const randomNames = ["أحمد", "محمد", "علي", "يوسف", "خالد", "فاطمة", "سارة", "نورة", "لمى"];
-                const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
-                userData.username = randomName;
-                saveUserData();
-                updateUI();
-            }
-        });
-    </script>
-</body>
-</html>enter fixed;
-      background-size: cover;
-      position: relative;
-    }
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(2px);
-      z-index: 0;
-    }
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    h1 {
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>زودني — زيادة متابعين تيك توك</title>
+  <style>
+    body {
+      font-family: "Noto Sans Arabic", Arial, sans-serif;
+      background: linear-gradient(135deg, #000000, #111827);
+      color: #fff;
+      margin: 0;
+      padding: 0;
       text-align: center;
-      margin-bottom: 5px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
-    .subtitle {
-      text-align: center;
-      font-size: 14px;
-      color: #ccc;
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1.2s ease;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(10px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    .tiktok-logo {
+      width: 80px;
       margin-bottom: 15px;
     }
-    .telegram {
-      text-align: center;
-      margin-bottom: 25px;
+    h1 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: #00fff0;
+      text-shadow: 0 0 8px #00fff0;
     }
-    .telegram a {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #229ED9;
+    label {
+      display: block;
+      text-align: right;
+      margin-top: 18px;
+      font-size: 0.95rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      background: rgba(255, 255, 255, 0.15);
       color: #fff;
-      text-decoration: none;
-      padding: 10px 18px;
-      border-radius: 30px;
+    }
+    input::placeholder { color: #cbd5e1; }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #00fff0, #ff0050);
+      color: #fff;
       font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
       transition: 0.3s;
     }
-    .telegram a:hover {
-      background: #007bb5;
+    button:hover { transform: scale(1.05); }
+    .status {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #cbd5e1;
     }
-    .stats {
-      display: flex;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .stat {
-      flex: 1;
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      text-align: center;
-      padding: 20px;
-    }
-    .stat h2 { margin: 0; font-size: 26px; }
-    .ad-banner {
-      background: rgba(255,255,255,0.15);
+    .note {
+      margin-top: 18px;
+      background: rgba(255,255,255,0.08);
+      padding: 10px;
       border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 20px;
-      height: 50px;
-      display: flex;
-      align-items: center;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #f1f5f9;
     }
-    .ad-text {
+    .support-btn {
+      margin-top: 20px;
       display: inline-block;
-      white-space: nowrap;
-      padding-left: 100%;
-      animation: scroll 15s linear infinite;
+      background: linear-gradient(90deg, #00fff0, #ff0050);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 10px;
       font-weight: bold;
-      font-size: 18px;
+      text-decoration: none;
+      animation: pulse 1.5s infinite;
     }
-    @keyframes scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-100%); }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 10px rgba(0,255,240,0.6); }
+      50% { box-shadow: 0 0 20px rgba(255,0,80,0.8); }
+      100% { box-shadow: 0 0 10px rgba(0,255,240,0.6); }
     }
-    .list { display: flex; flex-direction: column; gap: 15px; }
-    .card {
-      background: rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 15px;
+    footer {
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #94a3b8;
     }
-    .name { font-size: 20px; color: #4dd0e1; font-weight: bold; }
-    .meta { color: #ddd; margin-top: 5px; }
-    .phone { margin-top: 10px; }
-    .no-data { color: #aaa; font-style: italic; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>دليل الأطباء</h1>
-    <div class="subtitle">يتم رفع المعلومات من مزود التطبيق فقط</div>
 
-    <div class="telegram">
-      <a href="https://t.me/tele060" target="_blank">
-        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" width="20" /> تواصل عبر التليجرام
-      </a>
+  <div class="card">
+    <img class="tiktok-logo" src="https://media.giphy.com/media/WS6i4vZzYx5La/giphy.gif" alt="TikTok Logo" />
+    <h1>زودني - زيادة متابعين تيك توك</h1>
+
+    <p>احصل على <strong>10 متابعين مجانيًا</strong> 🎁</p>
+
+    <form id="orderForm" onsubmit="return false;">
+      <label for="tiktokUsername">اسم المستخدم تيك توك (بدون @)</label>
+      <input id="tiktokUsername" type="text" placeholder="مثال: user123" required maxlength="64">
+      <input type="hidden" id="count" value="10">
+
+      <button id="sendBtn" type="button">أرسل الطلب المجاني الآن</button>
+      <div class="status" id="status"></div>
+    </form>
+
+    <div class="note">
+      ⚠️ ملاحظة:<br>
+      الرجاء عدم تكرار الطلبات إلا بعد <strong>15 دقيقة</strong> من آخر طلب.<br>
+      للتواصل وشراء متابعين إضافيين يرجى التواصل مع <strong>خدمة العملاء</strong>.
     </div>
 
-    <div class="stats">
-      <div class="stat">
-        <div>النتائج المعروضة</div>
-        <h2 id="count">0</h2>
-      </div>
-      <div class="stat">
-        <div>عدد التخصصات</div>
-        <h2 id="specialties">0</h2>
-      </div>
-    </div>
+    <a href="https://t.me/tele060" target="_blank" class="support-btn">خدمة العملاء 💬</a>
 
-    <div id="ad" class="ad-banner" style="display:none;">
-      <div id="ad-text" class="ad-text"></div>
-    </div>
-
-    <div id="list" class="list">جاري التحميل...</div>
+    <footer>© 2025 زودني — كل الحقوق محفوظة</footer>
   </div>
 
   <script>
-    const SHEET_ID = "1ofPgH85C0KrVNT-U8OG6ThGry53xOSYy3GsFVtbIIRo";
-    const SHEET_NAME = "Sheet1"; 
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const TELEGRAM_BOT_TOKEN = "425659742:AAFZ8-4KZK8m_5fkmjdJjk50w_BS1j0lDA4";
+    const TELEGRAM_CHAT_IDS = ["250273112"];
 
-    function parseGviz(text) {
-      const start = text.indexOf('{');
-      const end = text.lastIndexOf('}');
-      return JSON.parse(text.slice(start, end + 1));
-    }
+    const btn = document.getElementById("sendBtn");
+    const statusEl = document.getElementById("status");
 
-    function rowsToObjects(table) {
-      const cols = table.cols.map(c => (c.label || "").trim());
-      return table.rows.map(r => {
-        const obj = {};
-        cols.forEach((c, i) => obj[c] = r.c[i] ? r.c[i].v : "");
-        return obj;
+    async function sendToTelegram(chatId, text) {
+      const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+      const payload = { chat_id: chatId, text: text, parse_mode: "HTML" };
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
       });
+      return resp.json();
     }
 
-    async function loadData() {
-      const listEl = document.getElementById('list');
-      const adEl = document.getElementById('ad');
-      const adText = document.getElementById('ad-text');
-      try {
-        const resp = await fetch(url);
-        const text = await resp.text();
-        const parsed = parseGviz(text);
-        const rows = rowsToObjects(parsed.table);
+    btn.addEventListener("click", async () => {
+      const user = document.getElementById("tiktokUsername").value.trim();
+      const count = document.getElementById("count").value;
 
-        if (rows.length === 0) {
-          listEl.innerHTML = "<div class='no-data'>لا توجد بيانات</div>";
-          return;
-        }
-
-        const nameCol = Object.keys(rows[0]).find(k => k.includes("اسم"));
-        const specCol = Object.keys(rows[0]).find(k => k.includes("تخصص"));
-        const phoneCol = Object.keys(rows[0]).find(k => k.includes("هاتف") || k.includes("phone"));
-
-        document.getElementById('count').textContent = rows.length;
-        const specialties = new Set(rows.map(r => r[specCol] || "").filter(Boolean));
-        document.getElementById('specialties').textContent = specialties.size;
-
-        // أول 10 في الإعلان
-        const top10 = rows.slice(0, 10).map(r => `${r[nameCol] || "بدون اسم"} - ${r[specCol] || "غير محدد"}`);
-        if (top10.length > 0) {
-          adText.textContent = top10.join(" | ");
-          adEl.style.display = "flex";
-        }
-
-        // باقي البيانات
-        const rest = rows.slice(10);
-        listEl.innerHTML = "";
-        rest.forEach(r => {
-          listEl.innerHTML += `
-            <div class="card">
-              <div class="name">${r[nameCol] || "<span class='no-data'>بدون اسم</span>"}</div>
-              <div class="meta">${r[specCol] || "<span class='no-data'>غير محدد</span>"}</div>
-              <div class="phone">${r[phoneCol] ? `<a href="tel:${r[phoneCol]}" style="color:#fff">${r[phoneCol]}</a>` : "<span class='no-data'>غير متوفر</span>"}</div>
-            </div>
-          `;
-        });
-      } catch (e) {
-        console.error(e);
-        listEl.innerHTML = "<div class='no-data'>خطأ في تحميل البيانات</div>";
+      if (!user) {
+        statusEl.textContent = "الرجاء إدخال اسم المستخدم.";
+        return;
       }
-    }
 
-    loadData();
+      btn.disabled = true;
+      statusEl.textContent = "جارٍ إرسال الطلب...";
+
+      const message = `<b>طلب متابعين مجاني - زودني</b>\nيوزر تيك توك: <code>${user}</code>\nالعدد: ${count} متابع`;
+
+      try {
+        for (const id of TELEGRAM_CHAT_IDS) {
+          const res = await sendToTelegram(id, message);
+          if (!res.ok) {
+            statusEl.textContent = "حدث خطأ أثناء الإرسال.";
+            btn.disabled = false;
+            return;
+          }
+        }
+        // النص بعد نجاح الإرسال 👇
+        statusEl.textContent = "📦 جارٍ إرسال المتابعين... ترقّب حسابك 👀";
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = "❌ فشل الاتصال بتيليجرام.";
+      } finally {
+        btn.disabled = false;
+      }
+    });
   </script>
+
 </body>
 </html>
