@@ -1,428 +1,183 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دردشة عامة</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 15px;
-            background-color: #4a90e2;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .chat-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-        
-        .messages {
-            height: 400px;
-            overflow-y: auto;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .message {
-            margin-bottom: 15px;
-            padding: 10px 15px;
-            border-radius: 18px;
-            max-width: 80%;
-            position: relative;
-        }
-        
-        .message.own {
-            background-color: #e3f2fd;
-            margin-left: auto;
-            margin-right: 0;
-            border-bottom-right-radius: 4px;
-        }
-        
-        .message.other {
-            background-color: #f1f1f1;
-            border-bottom-left-radius: 4px;
-        }
-        
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.85em;
-        }
-        
-        .username {
-            font-weight: bold;
-            color: #4a90e2;
-        }
-        
-        .timestamp {
-            color: #888;
-            font-size: 0.8em;
-        }
-        
-        .message-content {
-            word-wrap: break-word;
-        }
-        
-        .input-area {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .user-info {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        
-        .user-info input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        
-        .message-input {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .message-input textarea {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            resize: none;
-            height: 80px;
-        }
-        
-        .message-input button {
-            padding: 0 20px;
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .message-input button:hover {
-            background-color: #3a7bc8;
-        }
-        
-        .message-input button:disabled {
-            background-color: #a0c4f7;
-            cursor: not-allowed;
-        }
-        
-        .timer {
-            text-align: center;
-            color: #888;
-            font-size: 0.9em;
-            margin-top: 5px;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .notification.show {
-            opacity: 1;
-        }
-        
-        @media (max-width: 600px) {
-            .message {
-                max-width: 90%;
-            }
-            
-            .message-input {
-                flex-direction: column;
-            }
-            
-            .message-input button {
-                padding: 10px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خدمات ميديا</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f4f8;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    /* شاشة التحميل */
+    #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #007acc;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        z-index: 9999;
+    }
+
+    /* كتابة متحركة */
+    @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0; }
+    }
+
+    .blink {
+        animation: blink 1s infinite;
+    }
+
+    /* عروض */
+    #offers-container {
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .offer {
+        background: #fff;
+        padding: 15px 20px;
+        margin: 10px;
+        border-radius: 10px;
+        max-width: 300px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .buy-btn, .grab-btn {
+        background-color: #007acc;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .buy-btn:hover, .grab-btn:hover {
+        background-color: #005f99;
+    }
+
+    .free {
+        color: green;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    input[type="text"] {
+        padding: 8px;
+        width: 80%;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>دردشة عامة</h1>
-            <p>تواصل مع الآخرين بدون تسجيل دخول</p>
-        </header>
-        
-        <div class="chat-container">
-            <div class="messages" id="messagesContainer">
-                <!-- سيتم عرض الرسائل هنا -->
-            </div>
-            
-            <div class="input-area">
-                <div class="user-info">
-                    <input type="text" id="usernameInput" placeholder="اسمك المستعار" maxlength="20">
-                </div>
-                
-                <div class="message-input">
-                    <textarea id="messageInput" placeholder="اكتب رسالتك هنا..." maxlength="500"></textarea>
-                    <button id="sendButton">إرسال</button>
-                </div>
-                
-                <div class="timer" id="timer">يمكنك إرسال رسالة الآن</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="notification" id="notification">تم إرسال رسالتك بنجاح!</div>
 
-    <script>
-        // عناصر DOM
-        const messagesContainer = document.getElementById('messagesContainer');
-        const usernameInput = document.getElementById('usernameInput');
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        const timer = document.getElementById('timer');
-        const notification = document.getElementById('notification');
-        
-        // المتغيرات
-        let lastMessageTime = 0;
-        const MESSAGE_COOLDOWN = 10000; // 10 ثواني
-        let messages = [];
-        
-        // توليد اسم مستعار عشوائي
-        const randomNames = [
-            "مستكشف", "رحالة", "فضولي", "مفكر", "حالم", 
-            "مبدع", "متأمل", "مغامر", "صديق", "متعاون",
-            "مبتسم", "هادئ", "متحمس", "متفائل", "متعلم"
-        ];
-        
-        // تهيئة التطبيق
-        function init() {
-            // تعيين اسم مستعار عشوائي
-            const randomIndex = Math.floor(Math.random() * randomNames.length);
-            usernameInput.value = randomNames[randomIndex] + Math.floor(Math.random() * 1000);
-            
-            // تحميل الرسائل من localStorage
-            loadMessages();
-            
-            // عرض الرسائل
-            renderMessages();
-            
-            // إعداد المستمعين للأحداث
-            setupEventListeners();
-            
-            // تحديث المؤقت
-            updateTimer();
-        }
-        
-        // تحميل الرسائل من localStorage
-        function loadMessages() {
-            const storedMessages = localStorage.getItem('chatMessages');
-            if (storedMessages) {
-                messages = JSON.parse(storedMessages);
-            }
-        }
-        
-        // حفظ الرسائل في localStorage
-        function saveMessages() {
-            localStorage.setItem('chatMessages', JSON.stringify(messages));
-        }
-        
-        // عرض الرسائل
-        function renderMessages() {
-            messagesContainer.innerHTML = '';
-            
-            messages.forEach(message => {
-                const messageElement = document.createElement('div');
-                messageElement.className = 'message other';
-                
-                const messageHeader = document.createElement('div');
-                messageHeader.className = 'message-header';
-                
-                const usernameSpan = document.createElement('span');
-                usernameSpan.className = 'username';
-                usernameSpan.textContent = message.username;
-                
-                const timestampSpan = document.createElement('span');
-                timestampSpan.className = 'timestamp';
-                timestampSpan.textContent = formatTime(message.timestamp);
-                
-                messageHeader.appendChild(usernameSpan);
-                messageHeader.appendChild(timestampSpan);
-                
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                messageContent.textContent = message.content;
-                
-                messageElement.appendChild(messageHeader);
-                messageElement.appendChild(messageContent);
-                
-                messagesContainer.appendChild(messageElement);
-            });
-            
-            // التمرير إلى الأسفل لعرض أحدث الرسائل
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }
-        
-        // إعداد المستمعين للأحداث
-        function setupEventListeners() {
-            sendButton.addEventListener('click', sendMessage);
-            messageInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
+<!-- شاشة التحميل -->
+<div id="loader">
+    <div class="blink">ALRAES</div>
+    <div style="margin-top: 20px; font-size: 1.2em;">خدمات ميديا</div>
+</div>
+
+<h1>عروض اليوم</h1>
+<div id="offers-container"></div>
+
+<script>
+const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT8H2t5Qk-YourPublishedCSVLinkHere/pub?output=csv";
+
+// محاكاة التحميل لمدة 3 ثواني
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('loader').style.display = 'none';
+        fetchOffers();
+    }, 3000);
+});
+
+async function fetchOffers() {
+    const response = await fetch(sheetUrl);
+    const csvText = await response.text();
+
+    const rows = csvText.split("\n").map(row => row.split(","));
+    rows.shift(); // حذف العناوين إذا موجودة
+
+    const container = document.getElementById("offers-container");
+
+    rows.forEach((row, index) => {
+        const link = row[0];
+        const description = row[1];
+        const type = row[2].trim();
+
+        const offerDiv = document.createElement("div");
+        offerDiv.className = "offer";
+
+        const descElem = document.createElement("p");
+        descElem.textContent = description;
+        offerDiv.appendChild(descElem);
+
+        if(type === "مجاني") {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "ضع يوزر تيك توك هنا";
+            input.id = "tiktok-" + index;
+
+            const grabBtn = document.createElement("button");
+            grabBtn.className = "grab-btn";
+            grabBtn.textContent = "سحب";
+            grabBtn.onclick = () => {
+                const user = input.value.trim();
+                if(user === "") {
+                    alert("الرجاء إدخال يوزر تيك توك!");
+                    return;
                 }
-            });
+
+                // مثال إرسال البيانات إلى Endpoint وهمي
+                fetch("https://example.com/send_to_bot", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({username: user, offer: description})
+                }).then(() => {
+                    alert("تم السحب! (تجريبي)");
+                }).catch(() => {
+                    alert("حدث خطأ أثناء السحب.");
+                });
+            }
+
+            offerDiv.appendChild(input);
+            offerDiv.appendChild(grabBtn);
+
+        } else if(type === "شراء") {
+            const buyBtn = document.createElement("a");
+            buyBtn.className = "buy-btn";
+            buyBtn.href = link;
+            buyBtn.target = "_blank";
+            buyBtn.textContent = "شراء";
+            offerDiv.appendChild(buyBtn);
         }
-        
-        // إرسال رسالة
-        function sendMessage() {
-            const username = usernameInput.value.trim();
-            const content = messageInput.value.trim();
-            
-            if (!username) {
-                alert('الرجاء إدخال اسم مستعار');
-                return;
-            }
-            
-            if (!content) {
-                alert('الرجاء إدخال رسالة');
-                return;
-            }
-            
-            const currentTime = Date.now();
-            const timeSinceLastMessage = currentTime - lastMessageTime;
-            
-            if (timeSinceLastMessage < MESSAGE_COOLDOWN) {
-                const remainingTime = Math.ceil((MESSAGE_COOLDOWN - timeSinceLastMessage) / 1000);
-                alert(`يرجى الانتظار ${remainingTime} ثانية قبل إرسال رسالة أخرى`);
-                return;
-            }
-            
-            // إنشاء رسالة جديدة
-            const newMessage = {
-                id: Date.now(),
-                username: username,
-                content: content,
-                timestamp: currentTime
-            };
-            
-            // إضافة الرسالة إلى القائمة
-            messages.push(newMessage);
-            
-            // حفظ الرسائل
-            saveMessages();
-            
-            // عرض الرسائل
-            renderMessages();
-            
-            // تحديث وقت آخر رسالة
-            lastMessageTime = currentTime;
-            
-            // مسح حقل الإدخال
-            messageInput.value = '';
-            
-            // إظهار إشعار
-            showNotification('تم إرسال رسالتك بنجاح!');
-            
-            // تحديث المؤقت
-            updateTimer();
-        }
-        
-        // تحديث المؤقت
-        function updateTimer() {
-            const currentTime = Date.now();
-            const timeSinceLastMessage = currentTime - lastMessageTime;
-            
-            if (timeSinceLastMessage >= MESSAGE_COOLDOWN) {
-                timer.textContent = 'يمكنك إرسال رسالة الآن';
-                timer.style.color = '#4CAF50';
-            } else {
-                const remainingTime = Math.ceil((MESSAGE_COOLDOWN - timeSinceLastMessage) / 1000);
-                timer.textContent = `يرجى الانتظار ${remainingTime} ثانية قبل إرسال رسالة أخرى`;
-                timer.style.color = '#f44336';
-            }
-        }
-        
-        // تنسيق الوقت
-        function formatTime(timestamp) {
-            const date = new Date(timestamp);
-            const now = new Date();
-            
-            // إذا كان التاريخ اليوم
-            if (date.toDateString() === now.toDateString()) {
-                return `اليوم ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-            }
-            
-            // إذا كان التاريخ أمس
-            const yesterday = new Date(now);
-            yesterday.setDate(yesterday.getDate() - 1);
-            if (date.toDateString() === yesterday.toDateString()) {
-                return `أمس ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-            }
-            
-            // تاريخ آخر
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
-        }
-        
-        // إظهار إشعار
-        function showNotification(text) {
-            notification.textContent = text;
-            notification.classList.add('show');
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        // تحديث المؤقت كل ثانية
-        setInterval(updateTimer, 1000);
-        
-        // تحديث الرسائل كل 3 ثواني لمحاكاة تحديثات المستخدمين الآخرين
-        setInterval(() => {
-            loadMessages();
-            renderMessages();
-        }, 3000);
-        
-        // بدء التطبيق
-        init();
-    </script>
+
+        container.appendChild(offerDiv);
+    });
+}
+</script>
+
 </body>
 </html>
