@@ -3,187 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>لعبة إطلاق النار الاحترافية</title>
+<title>لعبة الفضاء والصواريخ</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+    background: black;
     overflow: hidden;
-    color: #fff;
+    color: white;
     touch-action: none;
   }
-  canvas {
-    display: block;
-    background: linear-gradient(to bottom, #111, #333);
-    margin: auto;
+  canvas { display:block; margin:auto; background:black; }
+  #ui {
+    position:absolute;
+    top:0; left:0; width:100%; text-align:center;
+    z-index:10;
   }
-  #score {
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+  #startScreen, #gameOverScreen {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
     font-size: 28px;
-    font-weight: bold;
-    color: #ffd700;
-    text-shadow: 0 0 10px #ffd700;
+    color:white;
+    background: rgba(0,0,0,0.7);
+  }
+  button {
+    padding:15px 30px;
+    margin-top:20px;
+    font-size:20px;
+    cursor:pointer;
+    border:none;
+    border-radius:10px;
+    background:#00ffff;
+    color:black;
+    font-weight:bold;
+  }
+  #score, #highScore {
+    font-size:24px;
+    margin-top:10px;
+    text-shadow:0 0 10px yellow;
   }
 </style>
 </head>
 <body>
 
-<div id="score">النقاط: 0</div>
+<div id="ui">
+  <div id="startScreen">
+    <div>🚀 ابدأ اللعبة 🚀</div>
+    <div id="highScore">أعلى نتيجة: 0</div>
+    <button onclick="startGame()">ابدأ</button>
+  </div>
+
+  <div id="gameOverScreen" style="display:none;">
+    <div id="finalScore">نقاطك: 0</div>
+    <div id="highScoreGameOver">أعلى نتيجة: 0</div>
+    <button onclick="startGame()">إعادة اللعب</button>
+  </div>
+
+  <div id="score">النقاط: 0</div>
+</div>
+
 <canvas id="gameCanvas"></canvas>
 
 <script>
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-
-// ضبط المقاسات لتناسب الشاشة
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// المتغيرات
-let score = 0;
+let gameInterval, score = 0, highScore = localStorage.getItem('highScore') || 0;
+let gameState = 'start'; // start, playing, over
+
+// اللاعب
 const player = {
-    x: canvas.width * 0.1,
+    x: canvas.width*0.1,
     y: canvas.height/2,
     width: 60,
     height: 60,
-    color: '#00ffff',
-    speed: 7
+    speed: 7,
+    color:'#00ffff'
 };
-let bullets = [];
-let enemies = [];
+let bullets = [], enemies = [], stars = [];
 
-// التحكم باللمس (للأجهزة المحمولة)
-let touchY = null;
-canvas.addEventListener('touchstart', e => {
-    touchY = e.touches[0].clientY;
-    shoot();
-});
-canvas.addEventListener('touchmove', e => {
-    const y = e.touches[0].clientY;
-    player.y += (y - touchY);
-    if(player.y < 0) player.y = 0;
-    if(player.y + player.height > canvas.height) player.y = canvas.height - player.height;
-    touchY = y;
+// إعداد الخلفية: نجوم متحركة
+for(let i=0;i<150;i++){
+    stars.push({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height,
+        size: Math.random()*2+1,
+        speed: Math.random()*1.5+0.5
+    });
+}
+
+// تحريك اللاعب باللمس
+let touchY=null;
+canvas.addEventListener('touchstart', e=>{ touchY=e.touches[0].clientY; shoot(); });
+canvas.addEventListener('touchmove', e=>{
+    const y=e.touches[0].clientY;
+    player.y+=(y-touchY);
+    if(player.y<0) player.y=0;
+    if(player.y+player.height>canvas.height) player.y=canvas.height-player.height;
+    touchY=y;
 });
 
-// إطلاق النار
+// إطلاق الصواريخ
 function shoot() {
     bullets.push({
         x: player.x + player.width,
-        y: player.y + player.height/2 - 10,
-        width: 20,
-        height: 20,
-        color: '#ffeb3b',
-        speed: 12
+        y: player.y + player.height/2 -10,
+        width:20,
+        height:5,
+        color:'#ffeb3b',
+        speed:12
     });
 }
 
 // إنشاء الأعداء
 function spawnEnemy() {
-    const y = Math.random() * (canvas.height - 70);
+    const y = Math.random()*(canvas.height-60);
     enemies.push({
         x: canvas.width + 60,
         y: y,
-        width: 60,
-        height: 60,
-        color: '#ff3d00',
-        speed: 4 + Math.random() * 3
+        width:60,
+        height:60,
+        color:'#ff3d00',
+        speed:3+Math.random()*2
     });
 }
 
-// التحديث
+// تحديث اللعبة
 function update() {
-    // تحديث الرصاصات
-    bullets.forEach((b,i) => {
-        b.x += b.speed;
-        if(b.x > canvas.width) bullets.splice(i,1);
+    // تحريك النجوم
+    stars.forEach(s=>{
+        s.x-=s.speed;
+        if(s.x<0) s.x=canvas.width;
     });
 
-    // تحديث الأعداء
-    enemies.forEach((e,i) => {
-        e.x -= e.speed;
-        if(e.x + e.width < 0) enemies.splice(i,1);
+    // تحريك الرصاصات
+    bullets.forEach((b,i)=>{
+        b.x+=b.speed;
+        if(b.x>canvas.width) bullets.splice(i,1);
     });
 
-    // التصادم بين الرصاصات والأعداء
-    bullets.forEach((b, bi) => {
-        enemies.forEach((e, ei) => {
-            if(b.x < e.x + e.width &&
-               b.x + b.width > e.x &&
-               b.y < e.y + e.height &&
-               b.y + b.height > e.y) {
-                   bullets.splice(bi,1);
-                   enemies.splice(ei,1);
-                   score += 10;
-                   document.getElementById('score').innerText = "النقاط: " + score;
+    // تحريك الأعداء
+    enemies.forEach((e,i)=>{
+        e.x-=e.speed;
+        if(e.x+e.width<0) enemies.splice(i,1);
+    });
+
+    // تصادم الرصاص مع الأعداء
+    bullets.forEach((b,bi)=>{
+        enemies.forEach((e,ei)=>{
+            if(b.x<e.x+e.width && b.x+b.width>e.x &&
+               b.y<e.y+e.height && b.y+b.height>e.y){
+                bullets.splice(bi,1);
+                enemies.splice(ei,1);
+                score+=10;
+                document.getElementById('score').innerText='النقاط: '+score;
             }
         });
     });
 
-    // التصادم بين اللاعب والأعداء
-    enemies.forEach(e => {
-        if(player.x < e.x + e.width &&
-           player.x + player.width > e.x &&
-           player.y < e.y + e.height &&
-           player.y + player.height > e.y) {
-               alert('انتهت اللعبة! نقاطك: ' + score);
-               document.location.reload();
+    // تصادم اللاعب مع الأعداء
+    enemies.forEach(e=>{
+        if(player.x<e.x+e.width && player.x+player.width>e.x &&
+           player.y<e.y+e.height && player.y+player.height>e.y){
+               endGame();
         }
     });
 
-    // إنشاء أعداء بشكل عشوائي
-    if(Math.random() < 0.03) spawnEnemy();
+    // ظهور الأعداء بشكل عشوائي
+    if(Math.random()<0.03) spawnEnemy();
 }
 
-// الرسم
+// رسم اللعبة
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
 
-    // اللاعب مع تأثير تدرج لامع
-    let gradient = ctx.createLinearGradient(player.x, player.y, player.x+player.width, player.y+player.height);
-    gradient.addColorStop(0, '#00ffff');
-    gradient.addColorStop(1, '#00ff90');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
-
-    // الرصاصات مع توهج
-    bullets.forEach(b => {
-        ctx.shadowBlur = 10;
-        ctx.shadowColor = b.color;
-        ctx.fillStyle = b.color;
-        ctx.fillRect(b.x, b.y, b.width, b.height);
-        ctx.shadowBlur = 0;
+    // الخلفية: النجوم
+    ctx.fillStyle='white';
+    stars.forEach(s=>{
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
+        ctx.fill();
     });
 
-    // الأعداء مع تأثير تدرج أحمر
-    enemies.forEach(e => {
-        let grad = ctx.createLinearGradient(e.x, e.y, e.x+e.width, e.y+e.height);
-        grad.addColorStop(0, '#ff3d00');
-        grad.addColorStop(1, '#ff9100');
-        ctx.fillStyle = grad;
-        ctx.fillRect(e.x, e.y, e.width, e.height);
+    // اللاعب: مركبة فضائية
+    ctx.fillStyle=player.color;
+    ctx.beginPath();
+    ctx.moveTo(player.x, player.y+player.height/2);
+    ctx.lineTo(player.x+player.width, player.y);
+    ctx.lineTo(player.x+player.width, player.y+player.height);
+    ctx.closePath();
+    ctx.fill();
+
+    // الرصاصات
+    bullets.forEach(b=>{
+        ctx.fillStyle=b.color;
+        ctx.fillRect(b.x,b.y,b.width,b.height);
+    });
+
+    // الأعداء: صواريخ حمراء
+    enemies.forEach(e=>{
+        ctx.fillStyle=e.color;
+        ctx.beginPath();
+        ctx.moveTo(e.x,e.y+e.height/2);
+        ctx.lineTo(e.x+e.width,e.y);
+        ctx.lineTo(e.x+e.width,e.y+e.height);
+        ctx.closePath();
+        ctx.fill();
     });
 }
 
 // حلقة اللعبة
 function gameLoop() {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop);
+    if(gameState==='playing'){
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
 }
 
 // بدء اللعبة
-gameLoop();
+function startGame(){
+    document.getElementById('startScreen').style.display='none';
+    document.getElementById('gameOverScreen').style.display='none';
+    score=0;
+    bullets=[]; enemies=[];
+    player.y=canvas.height/2;
+    document.getElementById('score').innerText='النقاط: 0';
+    document.getElementById('score').style.display='block';
+    gameState='playing';
+    gameLoop();
+}
 
-// إعادة ضبط المقاسات عند تغيير حجم الشاشة
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    player.y = canvas.height/2;
+// إنهاء اللعبة
+function endGame(){
+    gameState='over';
+    document.getElementById('score').style.display='none';
+    if(score>highScore){
+        highScore=score;
+        localStorage.setItem('highScore',highScore);
+    }
+    document.getElementById('finalScore').innerText='نقاطك: '+score;
+    document.getElementById('highScoreGameOver').innerText='أعلى نتيجة: '+highScore;
+    document.getElementById('gameOverScreen').style.display='flex';
+}
+
+// عرض أعلى نتيجة في شاشة البداية
+document.getElementById('highScore').innerText='أعلى نتيجة: '+highScore;
+
+// ضبط الحجم عند تغيير الشاشة
+window.addEventListener('resize',()=>{
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
 });
 </script>
 
