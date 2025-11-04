@@ -1,265 +1,192 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>لعبة الفضاء والصواريخ</title>
-<style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: black;
-    overflow: hidden;
-    color: white;
-    touch-action: none;
-  }
-  canvas { display:block; margin:auto; background:black; }
-  #ui {
-    position:absolute;
-    top:0; left:0; width:100%; text-align:center;
-    z-index:10;
-  }
-  #startScreen, #gameOverScreen {
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    font-size: 28px;
-    color:white;
-    background: rgba(0,0,0,0.7);
-  }
-  button {
-    padding:15px 30px;
-    margin-top:20px;
-    font-size:20px;
-    cursor:pointer;
-    border:none;
-    border-radius:10px;
-    background:#00ffff;
-    color:black;
-    font-weight:bold;
-  }
-  #score, #highScore {
-    font-size:24px;
-    margin-top:10px;
-    text-shadow:0 0 10px yellow;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مساعد تبادل اشتراكات تيليجرام</title>
+    <style>
+        /* تعيين الخط */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #8e44ad, #3498db);
+            color: white;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* تصميم واجهة التطبيق */
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 80%;
+            max-width: 600px;
+            text-align: right;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            margin-bottom: 20px;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #34495e;
+            color: #ecf0f1;
+        }
+
+        tr:nth-child(even) {
+            background-color: #2c3e50;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        #telegramLink {
+            display: none;
+            margin-top: 20px;
+            background-color: #f39c12;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            font-size: 1rem;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 2px solid #ecf0f1;
+            background-color: #34495e;
+            color: white;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+
+        /* تأثير على النصوص */
+        .highlight {
+            color: #f39c12;
+        }
+    </style>
 </head>
 <body>
 
-<div id="ui">
-  <div id="startScreen">
-    <div>🚀 ابدأ اللعبة 🚀</div>
-    <div id="highScore">أعلى نتيجة: 0</div>
-    <button onclick="startGame()">ابدأ</button>
-  </div>
+<div class="container">
+    <h1>مساعد تبادل اشتراكات تيليجرام</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>رابط المهمة</th>
+                <th>وصف المهمة</th>
+                <th>إتمام المهمة</th>
+            </tr>
+        </thead>
+        <tbody id="tasksTable">
+            <!-- سيتم ملء الجدول بالمهام هنا -->
+        </tbody>
+    </table>
 
-  <div id="gameOverScreen" style="display:none;">
-    <div id="finalScore">نقاطك: 0</div>
-    <div id="highScoreGameOver">أعلى نتيجة: 0</div>
-    <button onclick="startGame()">إعادة اللعب</button>
-  </div>
-
-  <div id="score">النقاط: 0</div>
+    <div id="telegramLink">
+        <h2>أنت أكملت <span class="highlight">5 مهام</span>! الآن قم بإضافة رابط قناتك في تيليجرام:</h2>
+        <input type="text" id="telegramChannel" placeholder="رابط قناتك في تيليجرام">
+        <button onclick="sendToTelegram()">رفع الرابط</button>
+    </div>
 </div>
 
-<canvas id="gameCanvas"></canvas>
-
 <script>
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+    const sheetID = '1sYKpRbTeebD5hIqnYG5sU0vhxq9I-UyZ1EgBqTxwGc4'; // معرف الجدول
+    const apiKey = 'YOUR_API_KEY'; // مفتاح API الخاص بك
+    let completedTasks = 0;
 
-let gameInterval, score = 0, highScore = localStorage.getItem('highScore') || 0;
-let gameState = 'start'; // start, playing, over
+    // دالة لجلب البيانات من Google Sheets
+    async function fetchTasks() {
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetID}/values/Sheet1?key=${apiKey}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        const rows = data.values;
 
-// اللاعب
-const player = {
-    x: canvas.width*0.1,
-    y: canvas.height/2,
-    width: 60,
-    height: 60,
-    speed: 7,
-    color:'#00ffff'
-};
-let bullets = [], enemies = [], stars = [];
+        const tableBody = document.getElementById('tasksTable');
+        tableBody.innerHTML = ''; // مسح الجدول القديم
 
-// إعداد الخلفية: نجوم متحركة
-for(let i=0;i<150;i++){
-    stars.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        size: Math.random()*2+1,
-        speed: Math.random()*1.5+0.5
-    });
-}
+        rows.forEach((row, index) => {
+            const taskLink = row[0];
+            const taskDescription = row[1];
 
-// تحريك اللاعب باللمس
-let touchY=null;
-canvas.addEventListener('touchstart', e=>{ touchY=e.touches[0].clientY; shoot(); });
-canvas.addEventListener('touchmove', e=>{
-    const y=e.touches[0].clientY;
-    player.y+=(y-touchY);
-    if(player.y<0) player.y=0;
-    if(player.y+player.height>canvas.height) player.y=canvas.height-player.height;
-    touchY=y;
-});
-
-// إطلاق الصواريخ
-function shoot() {
-    bullets.push({
-        x: player.x + player.width,
-        y: player.y + player.height/2 -10,
-        width:20,
-        height:5,
-        color:'#ffeb3b',
-        speed:12
-    });
-}
-
-// إنشاء الأعداء
-function spawnEnemy() {
-    const y = Math.random()*(canvas.height-60);
-    enemies.push({
-        x: canvas.width + 60,
-        y: y,
-        width:60,
-        height:60,
-        color:'#ff3d00',
-        speed:3+Math.random()*2
-    });
-}
-
-// تحديث اللعبة
-function update() {
-    // تحريك النجوم
-    stars.forEach(s=>{
-        s.x-=s.speed;
-        if(s.x<0) s.x=canvas.width;
-    });
-
-    // تحريك الرصاصات
-    bullets.forEach((b,i)=>{
-        b.x+=b.speed;
-        if(b.x>canvas.width) bullets.splice(i,1);
-    });
-
-    // تحريك الأعداء
-    enemies.forEach((e,i)=>{
-        e.x-=e.speed;
-        if(e.x+e.width<0) enemies.splice(i,1);
-    });
-
-    // تصادم الرصاص مع الأعداء
-    bullets.forEach((b,bi)=>{
-        enemies.forEach((e,ei)=>{
-            if(b.x<e.x+e.width && b.x+b.width>e.x &&
-               b.y<e.y+e.height && b.y+b.height>e.y){
-                bullets.splice(bi,1);
-                enemies.splice(ei,1);
-                score+=10;
-                document.getElementById('score').innerText='النقاط: '+score;
-            }
+            const rowHTML = `
+                <tr>
+                    <td>${taskLink}</td>
+                    <td>${taskDescription}</td>
+                    <td><button onclick="completeTask(${index})">إتمام المهمة</button></td>
+                </tr>
+            `;
+            tableBody.insertAdjacentHTML('beforeend', rowHTML);
         });
-    });
+    }
 
-    // تصادم اللاعب مع الأعداء
-    enemies.forEach(e=>{
-        if(player.x<e.x+e.width && player.x+player.width>e.x &&
-           player.y<e.y+e.height && player.y+player.height>e.y){
-               endGame();
+    // دالة لإتمام المهمة
+    function completeTask(index) {
+        completedTasks++;
+        if (completedTasks >= 5) {
+            document.getElementById('telegramLink').style.display = 'block';
         }
-    });
-
-    // ظهور الأعداء بشكل عشوائي
-    if(Math.random()<0.03) spawnEnemy();
-}
-
-// رسم اللعبة
-function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    // الخلفية: النجوم
-    ctx.fillStyle='white';
-    stars.forEach(s=>{
-        ctx.beginPath();
-        ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
-        ctx.fill();
-    });
-
-    // اللاعب: مركبة فضائية
-    ctx.fillStyle=player.color;
-    ctx.beginPath();
-    ctx.moveTo(player.x, player.y+player.height/2);
-    ctx.lineTo(player.x+player.width, player.y);
-    ctx.lineTo(player.x+player.width, player.y+player.height);
-    ctx.closePath();
-    ctx.fill();
-
-    // الرصاصات
-    bullets.forEach(b=>{
-        ctx.fillStyle=b.color;
-        ctx.fillRect(b.x,b.y,b.width,b.height);
-    });
-
-    // الأعداء: صواريخ حمراء
-    enemies.forEach(e=>{
-        ctx.fillStyle=e.color;
-        ctx.beginPath();
-        ctx.moveTo(e.x,e.y+e.height/2);
-        ctx.lineTo(e.x+e.width,e.y);
-        ctx.lineTo(e.x+e.width,e.y+e.height);
-        ctx.closePath();
-        ctx.fill();
-    });
-}
-
-// حلقة اللعبة
-function gameLoop() {
-    if(gameState==='playing'){
-        update();
-        draw();
-        requestAnimationFrame(gameLoop);
     }
-}
 
-// بدء اللعبة
-function startGame(){
-    document.getElementById('startScreen').style.display='none';
-    document.getElementById('gameOverScreen').style.display='none';
-    score=0;
-    bullets=[]; enemies=[];
-    player.y=canvas.height/2;
-    document.getElementById('score').innerText='النقاط: 0';
-    document.getElementById('score').style.display='block';
-    gameState='playing';
-    gameLoop();
-}
+    // دالة لإرسال رابط القناة إلى البوت
+    function sendToTelegram() {
+        const channelLink = document.getElementById('telegramChannel').value;
+        if (!channelLink) {
+            alert('من فضلك أدخل رابط القناة');
+            return;
+        }
 
-// إنهاء اللعبة
-function endGame(){
-    gameState='over';
-    document.getElementById('score').style.display='none';
-    if(score>highScore){
-        highScore=score;
-        localStorage.setItem('highScore',highScore);
+        const botURL = `https://api.telegram.org/bot425659742:AAFZ8-4KZK8m_5fkmjdJjk50w_BS1j0lDA4/sendMessage?chat_id=250273112&text=${encodeURIComponent(channelLink)}`;
+
+        fetch(botURL)
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('تم إرسال رابط القناة بنجاح');
+                } else {
+                    alert('حدث خطأ أثناء إرسال الرابط');
+                }
+            });
     }
-    document.getElementById('finalScore').innerText='نقاطك: '+score;
-    document.getElementById('highScoreGameOver').innerText='أعلى نتيجة: '+highScore;
-    document.getElementById('gameOverScreen').style.display='flex';
-}
 
-// عرض أعلى نتيجة في شاشة البداية
-document.getElementById('highScore').innerText='أعلى نتيجة: '+highScore;
-
-// ضبط الحجم عند تغيير الشاشة
-window.addEventListener('resize',()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-});
+    // تحميل البيانات عند فتح الصفحة
+    window.onload = fetchTasks;
 </script>
 
 </body>
